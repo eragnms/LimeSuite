@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mats/projects/LimeSuite/src/examples/basicRX.cpp
+lime/LimeSuite.h
+/home/mats/projects/LimeSuite/src/examples/lime/LimeSuite.h
+iostream
+-
+chrono
+-
+gnuPlotPipe.h
+/home/mats/projects/LimeSuite/src/examples/gnuPlotPipe.h
+

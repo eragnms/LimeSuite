@@ -279,7 +279,8 @@ int SoapyLMS7::_readStreamAligned(
     size_t numElems,
     uint64_t requestTime,
     StreamChannel::Metadata &md,
-    const long timeoutMs)
+    const long timeoutMs,
+    bool is_beacon)
 {
     const auto &streamID = stream->streamID;
     const size_t elemSize = stream->elemSize;
@@ -291,7 +292,9 @@ int SoapyLMS7::_readStreamAligned(
         const uint64_t expectedTime(requestTime + N);
         if (numElems <= N)
             continue;
-        int status = streamID[i]->Read(buffs[i]+(elemSize*N), numElems-N,&md, timeoutMs);
+        int status(0);
+        // LimeSuite/src/ConnectionFT601.cpp:ConnectionFT601::Read
+        status = streamID[i]->Read(buffs[i]+(elemSize*N), numElems-N,&md, timeoutMs);
         if (status == 0) return SOAPY_SDR_TIMEOUT;
         if (status < 0) return SOAPY_SDR_STREAM_ERROR;
 
@@ -351,6 +354,10 @@ int SoapyLMS7::readStream(
     long long &timeNs,
     const long timeoutUs)
 {
+        bool is_beacon(false);
+        if ((flags & (1<<7)) != 0) {
+                is_beacon = true;
+        }
     auto icstream = (IConnectionStream *)stream;
 
     const auto exitTime = std::chrono::high_resolution_clock::now() + std::chrono::microseconds(timeoutUs);
@@ -373,7 +380,12 @@ int SoapyLMS7::readStream(
 
     StreamChannel::Metadata metadata;
     const uint64_t cmdTicks = ((icstream->flags & SOAPY_SDR_HAS_TIME) != 0)?SoapySDR::timeNsToTicks(icstream->timeNs, sampleRate[SOAPY_SDR_RX]):0;
-    int status = _readStreamAligned(icstream, (char * const *)buffs, numElems, cmdTicks, metadata, timeoutUs/1000);
+    int status(0);
+    if (not is_beacon) {
+            status = _readStreamAligned(icstream, (char * const *)buffs, numElems, cmdTicks, metadata, timeoutUs/1000, is_beacon);
+    }
+
+
     if (status < 0) return status;
 
     //the command had a time, so we need to compare it to received time

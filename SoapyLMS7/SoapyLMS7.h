@@ -87,7 +87,8 @@ public:
         size_t numElems,
         uint64_t requestTime,
         lime::StreamChannel::Metadata &mdOut,
-        const long timeoutMs);
+        const long timeoutMs,
+            bool is_beacon);
 
     int writeStream(
         SoapySDR::Stream *stream,

@@ -1,0 +1,1 @@
+/usr/bin/c++   -fvisibility-inlines-hidden -pthread -O3 -DNDEBUG  -rdynamic CMakeFiles/basicTX.dir/basicTX.cpp.o  -o ../../bin/basicTX -Wl,-rpath,/home/mats/projects/LimeSuite/builddir/src ../libLimeSuite.so.19.04.0 -pthread -lusb-1.0 

@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mats/projects/LimeSuite/src/boardEmulator.cpp
+signal.h
+-
+stdlib.h
+-
+stdio.h
+-
+iostream
+-
+thread
+-
+unistd.h
+-
+fcntl.h
+-
+errno.h
+-
+string.h
+-
+vector
+-
+termios.h
+-
+map
+-
+ctime
+-
+LMS64CProtocol.h
+-
+LMSBoards.h
+-
+
