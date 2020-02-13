@@ -165,6 +165,12 @@ SoapySDR::Stream *SoapyLMS7::setupStream(
                 config.performanceLatency = 1;
         }
 
+        std::cout << "Buffer length " << config.bufferLength
+                  << " Is TX " << config.isTx
+                  << " channel num " << i
+                  << " latency " << config.performanceLatency
+                  << std::endl;
+
         //create the stream
         StreamChannel* streamID = lms7Device->SetupStream(config);
         if (streamID == 0)
